@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #faf9e6;
+}
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: #e6e4d8;
+  padding-top: 20px;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.nav-item {
+  padding: 15px 20px;
+  border-left: 5px solid transparent;
+  cursor: pointer;
+  color: #444;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: #ddd;
+  border-left-color: orange;
+  font-weight: bold;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.leaderboard th, .leaderboard td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.rank {
+  background: #ffd700;
+  border-radius: 50%;
+  padding: 10px 14px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.dept.cs {
+  color: limegreen;
+}
+
+.dept.it {
+  color: steelblue;
+}
+
+.marks {
+  background: green;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 50%;
+  display: inline-block;
+}

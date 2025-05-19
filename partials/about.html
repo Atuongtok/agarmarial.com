@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agar Marial</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.student.css" />
+  <link rel="stylesheet" href="../about.css" />
+  
+  <!-- Font Awesome -->
+  <link
+    href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+  
+  <!-- Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+  
+  <style>
+    /* Swiper container size */
+    .swiper {
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin: 2rem auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    
+    /* Images fit inside slides */
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    
+    /* Basic header and layout fixes */
+    header.container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo__logo {
+      height: 50px;
+    }
+    
+    ul.content {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    ul.content li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    
+    ul.content li a:hover {
+      color: #007bff;
+    }
+
+    /* Footer styling */
+    .footer {
+      background: #222;
+      color: #ddd;
+      padding: 3rem 2rem;
+      font-family: Arial, sans-serif;
+    }
+    .footer__container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+    }
+    .footer__container ul {
+      list-style: none;
+      padding: 0;
+      min-width: 150px;
+    }
+    .footer__container h1 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      text-transform: uppercase;
+    }
+    .footer__container li {
+      margin-bottom: 0.7rem;
+    }
+    .footer__container a.link_1 {
+      color: #bbb;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .footer__container a.link_1:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .under__line hr {
+      border: none;
+      height: 1px;
+      background: #444;
+      margin: 2rem 0;
+    }
+    .copy {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* Responsive footer */
+    @media (max-width: 768px) {
+      .footer__container {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .footer__container ul {
+        min-width: 100%;
+      }
+    }
+
+    /* Section Styling */
+.section___section {
+  position: relative;
+  padding: 40px;
+  background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+/* Wrapper for overflow scrolling */
+.slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Grid Container with slide functionality */
+.under__stages {
+  display: grid;
+  grid-template-columns: repeat(4, 100%);
+  gap: 20px;
+  transition: transform 0.6s ease;
+  width: 400%; /* 4 slides */
+}
+
+/* Slide Item */
+.slide-item {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Image Styling */
+.create__under img {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+/* Navigation Buttons */
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 6px;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+  </style>
+</head>
+<body>
+  <!------header------>
+  <header class="container">
+    <a href="#" class="logo"
+      ><img
+        class="logo__logo"
+        src="../images/South_Media_Tech_logo.jpg"
+        alt="South Media Tech"
+    /></a>
+    <ul class="content" id="content__menu">
+      <li><a href="home.html" class="under__line">Home</a></li>
+      <li><a href="profile.html" class="under__line">Profile</a></li>
+      <li><a href="about.html" class="under__line">About us</a></li>
+      <li><a href="skills.html" class="under__line">My skills</a></li>
+      <li><a href="contact.html" class="under__line">Contact</a></li>
+    </ul>
+    <div class="icons">
+      <span class="bar__bar"></span>
+      <span class="bar__bar"></span>
+      <span class="bar__bar"></span>
+    </div>
+  </header>
+
+  <!-- Swiper slider for images -->
+  <section class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="./images/.jpg" alt="Programming skills 1" />
+      </div>
+      <div class="swiper-slide">
+        <img src="./images/image5.jpg" alt="Programming skills 2" />
+      </div>
+      <div class="swiper-slide">
+        <img src="./images/image0.jpg" alt="Programming skills 3" />
+      </div>
+      <!-- Add more slides as needed -->
+    </div>
+
+    <!-- Swiper navigation buttons -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+    <!-- Pagination dots -->
+    <div class="swiper-pagination"></div>
+  </section>
+
+<section class="section___section">
+  <div class="slider-wrapper">
+    <div class="under__stages">
+      <div class="content__trinity slide-item">
+        <h1>My skills in programming</h1>
+        <p class="under___under">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
+          consectetur quia repudiandae recusandae dolor sapiente cumque...
+        </p>
+      </div>
+
+      <div class="content__trinity slide-item">
+        <h1>My skills in programming</h1>
+        <p class="under___under">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
+          consectetur quia repudiandae recusandae dolor sapiente cumque...
+        </p>
+      </div>
+
+      <div class="student__stu slide-item">
+        <h2><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit.</strong></h2>
+        <p class="still__not">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat
+          aliquam culpa ratione explicabo sequi sunt...
+        </p>
+      </div>
+
+      <div class="create__under slide-item">
+        <img src="../images/image0.jpg" alt="Example image" />
+      </div>
+    </div>
+    <!-- Slider Navigation Buttons -->
+    <button class="prev-btn">&#10094;</button>
+    <button class="next-btn">&#10095;</button>
+  </div>
+</section>
+
+  <!---------==========================footer begin===============================---------->
+  <section class="footer">
+    <div class="footer__container">
+      <ul class="ull__li">
+        <h1><span>My unique skills in programming</span></h1>
+        <li class="link__tap">
+          <a href="" class="link_1">social relation</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">mission</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">vision</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">creativity and skills</a>
+        </li>
+      </ul>
+
+      <ul class="ull__li">
+        <h1><span>Agar Marial interaction</span></h1>
+        <li class="link__tap">
+          <a href="" class="link_1">knowledges in programming languages</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">what to know about me</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">learning</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">activities we do</a>
+        </li>
+      </ul>
+      <ul class="ull__li">
+        <h1><span>fourth year student in university of juba</span></h1>
+        <li class="link__tap">
+          <a href="" class="link_1">want to know colleagues</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">my university</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">motivation</a>
+        </li>
+        <li class="link__tap">
+          <a href="" class="link_1">sports</a>
+        </li>
+      </ul>
+      <ul class="ull__li">
+        <h1><span>leadership</span></h1>
+        <li class="link__tap">
+          <a href="" class="link_1">leadership</a> 
+          </body>
+</html>
+          

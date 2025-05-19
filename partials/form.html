@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    .header-nav {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-nav .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .header-nav .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .header-nav .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .header-nav .nav-links a:hover {
+      background-color: #0056b3;
+    }
+
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h1 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="checkbox"],
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-container button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      background-color: #007bff;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .footer-column p,
+    .footer-column ul {
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffcc00;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 10px;
+    }
+
+    /* Style for the checkbox container */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    /* Style for the checkbox */
+    .checkbox-container input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #007bff; /* Change the checkbox color */
+    }
+
+    /* Style for the label */
+    .checkbox-container label {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header-nav">
+    <div class="logo">University of Juba</div>
+    <nav class="nav-links">
+      <a href="lead.html">Leaderboard</a>
+      <a href="form.html">Register Student</a>
+      <a href="#contact">Contact Us</a>
+      <a href="lead.html" class="nav-link">View Attendance</a>
+      <a href="form.html" class="nav-link">Register Attendance</a>
+    </nav>
+  </header>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <h1>Student Registration</h1>
+    <form id="student-form">
+      <label for="student-name">Name:</label>
+      <input type="text" id="student-name" required>
+
+      <label for="student-department">Department:</label>
+      <input type="text" id="student-department" required>
+
+      <label for="student-index">Index Number:</label>
+      <input type="text" id="student-index" required>
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="student-present">
+        <label for="student-present">Present</label>
+      </div>
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="student-absent">
+        <label for="student-absent">Absent</label>
+      </div>
+
+      <button type="button" id="submit-student-btn">Submit</button>
+    </form>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>About Us</h3>
+        <p>University of Juba is a leading institution in education and research, fostering innovation and excellence.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="lead.html" class="footer-link">Leaderboard</a></li>
+          <li><a href="#contest-details" class="footer-link">Contest Details</a></li>
+          <li><a href="#submission" class="footer-link">Submission</a></li>
+          <li><a href="#contact" class="footer-link">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.facebook.com" target="_blank" class="footer-link">Facebook</a></li>
+          <li><a href="https://www.twitter.com" target="_blank" class="footer-link">Twitter</a></li>
+          <li><a href="https://www.instagram.com" target="_blank" class="footer-link">Instagram</a></li>
+          <li><a href="https://www.linkedin.com" target="_blank" class="footer-link">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <p>Email: info@uofjuba.edu</p>
+        <p>Phone: +211 123 456 789</p>
+        <p>Address: Juba, South Sudan</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 University of Juba. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Handle form submission
+    document.getElementById('submit-student-btn').addEventListener('click', () => {
+      const name = document.getElementById('student-name').value;
+      const department = document.getElementById('student-department').value;
+      const indexNumber = document.getElementById('student-index').value;
+      const isPresent = document.getElementById('student-present').checked;
+      const isAbsent = document.getElementById('student-absent').checked;
+
+      // Ensure only one of Present or Absent is selected
+      if (isPresent && isAbsent) {
+        alert('A student cannot be both Present and Absent. Please select only one.');
+        return;
+      }
+
+      if (name && department && indexNumber) {
+        // Save data to localStorage
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+        students.push({ name, department, indexNumber, isPresent });
+        localStorage.setItem('students', JSON.stringify(students));
+
+        // Redirect to the attendance page
+        alert('You have successfully registered your attendance!');
+        window.location.href = 'lead.html'; // Redirect to the attendance page
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+  </script>
+</body>
+</html>
+``` 

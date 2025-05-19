@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="stylee.css">
+  <style>
+    /* Style for the header navigation bar */
+    .header-nav {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: fixed; /* Fix the navigation bar */
+      top: 0; /* Position it at the top */
+      left: 0;
+      width: 100%; /* Make it span the full width of the page */
+      z-index: 1000; /* Ensure it stays above other elements */
+    }
+
+    .header-nav .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .header-nav .nav-links {
+      display: flex;
+      gap: 20px; /* Add spacing between links */
+      margin-right: 20px; /* Push links away from the right edge */
+    }
+
+    .header-nav .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 8px 15px; /* Add padding for better clickability */
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .header-nav .nav-links a:hover {
+      background-color: #0056b3; /* Change background color on hover */
+    }
+
+    /* Add padding to align content below the fixed header */
+    .container {
+      padding-top: 80px; /* Adjust this value to match the height of the header */
+    }
+
+    /* Style for the form container */
+    #add-student-form {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style for form labels */
+    #add-student-form label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    /* Style for input fields */
+    #add-student-form input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    /* Style for the submit button */
+    #submit-student-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    #submit-student-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Style for the status columns */
+    .status {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .status.present {
+      color: green;
+    }
+
+    .status.absent {
+      color: red;
+    }
+
+    /* Style for the delete button */
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation Bar -->
+  <header class="header-nav">
+    <div class="logo">South Media Tech</div>
+    <nav class="nav-links">
+      <a href="#leaderboard">students Dashboard</a>
+      <a href="#contest-details">attendance details</a>
+      <a href="#submission">Submission</a>
+      <a href="form.html" class="nav-link">Register Attendance</a>
+      <a href="lead.html" class="nav-link">View Attendance</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="nav-item active">students Dashboard</div>
+      <div class="nav-item">attendance details</div>
+      <div class="nav-item">Submission</div>
+    </aside>
+
+    <!-- Updated Table and Form -->
+    <main class="main-content">
+      <h1>students Dashboard</h1>
+      <p>Last updated: 5/9/2025</p>
+      <p>Total Students Attended: <span id="total-attended" style="color: green;">0</span></p>
+      <table class="leaderboard">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Index Number</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Empty message -->
+          <tr id="empty-message">
+            <td colspan="7" style="text-align: center; color: gray;">No students added yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    <script>
+      const students = JSON.parse(localStorage.getItem('students')) || [];
+      let totalAttended = 0;
+
+      // Show the form when the "Add Student" button is clicked
+      document.getElementById('add-student-btn').addEventListener('click', () => {
+        document.getElementById('add-student-form').style.display = 'block';
+      });
+
+      // Add the new student to the leaderboard when the "Submit" button is clicked
+      document.getElementById('submit-student-btn').addEventListener('click', () => {
+        const name = document.getElementById('student-name').value;
+        const department = document.getElementById('student-department').value;
+        const indexNumber = document.getElementById('student-index').value;
+        const isPresent = document.getElementById('student-present').checked;
+        const isAbsent = document.getElementById('student-absent').checked;
+
+        // Ensure only one of Present or Absent is selected
+        if (isPresent && isAbsent) {
+          alert('A student cannot be both Present and Absent. Please select only one.');
+          return;
+        }
+
+        if (name && department && indexNumber) {
+          const tbody = document.querySelector('.leaderboard tbody');
+          const emptyMessage = document.getElementById('empty-message');
+
+          // Remove the empty message if it exists
+          if (emptyMessage) {
+            emptyMessage.remove();
+          }
+
+          const rowCount = tbody.rows.length + 1; // Calculate the rank based on the number of rows
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td><span class="rank">${rowCount}</span></td>
+            <td>${name}</td>
+            <td class="dept">${department}</td>
+            <td>${indexNumber}</td>
+            <td class="status present" style="color: ${isPresent ? 'green' : 'gray'};">${isPresent ? '✔' : ''}</td>
+            <td class="status absent" style="color: ${isAbsent ? 'red' : 'gray'};">${isAbsent ? '✘' : ''}</td>
+            <td><button class="delete-btn">Delete</button></td>
+          `;
+
+          tbody.appendChild(row);
+
+          // Update total attended count
+          if (isPresent) {
+            totalAttended++;
+            document.getElementById('total-attended').textContent = totalAttended;
+          }
+
+          // Clear the form and hide it
+          document.getElementById('student-name').value = '';
+          document.getElementById('student-department').value = '';
+          document.getElementById('student-index').value = '';
+          document.getElementById('student-present').checked = false;
+          document.getElementById('student-absent').checked = false;
+          document.getElementById('add-student-form').style.display = 'none';
+        } else {
+          alert('Please fill in all fields.');
+        }
+      });
+
+      // Add event listener for delete buttons
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+          const row = e.target.closest('tr');
+          const isPresent = row.querySelector('.status.present').textContent === '✔';
+          if (isPresent) {
+            totalAttended--;
+            document.getElementById('total-attended').textContent = totalAttended;
+          }
+          row.remove();
+
+          // If the table is empty, show the empty message
+          const tbody = document.querySelector('.leaderboard tbody');
+          if (tbody.rows.length === 0) {
+            tbody.innerHTML = `<tr id="empty-message">
+              <td colspan="7" style="text-align: center; color: gray;">No students added yet.</td>
+            </tr>`;
+          }
+        }
+      });
+
+      // Generate a single PDF for all present students
+      document.getElementById('generate-pdf-btn').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Add headings
+        doc.setFontSize(16);
+        doc.text('University of Juba', 10, 20);
+        doc.text('School of Computer Science and Information Technology', 10, 30);
+
+        // Add table headers
+        doc.setFontSize(12);
+        doc.text('Attendance Report', 10, 50);
+        doc.text('S/N', 10, 60);
+        doc.text('Name', 30, 60);
+        doc.text('Department', 70, 60);
+        doc.text('Index Number', 110, 60);
+        doc.text('Status', 160, 60);
+
+        const tbody = document.querySelector('.leaderboard tbody');
+        let y = 70; // Vertical position for text
+        let presentCount = 0;
+
+        Array.from(tbody.rows).forEach((row, index) => {
+          const name = row.children[1]?.textContent || '';
+          const department = row.children[2]?.textContent || '';
+          const indexNumber = row.children[3]?.textContent || '';
+          const isPresent = row.children[4]?.textContent === '✔';
+
+          if (isPresent) {
+            presentCount++;
+            doc.text(`${presentCount}`, 10, y);
+            doc.text(name, 30, y);
+            doc.text(department, 70, y);
+            doc.text(indexNumber, 110, y);
+            doc.text('Present', 160, y);
+            y += 10;
+          }
+        });
+
+        if (presentCount === 0) {
+          doc.text('No students were marked as present.', 10, y);
+        }
+
+        doc.save('Attendance_Report.pdf');
+      });
+
+      // Fetch data from localStorage and update the leaderboard
+      const loadStudents = () => {
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+        const tbody = document.querySelector('.leaderboard tbody');
+        tbody.innerHTML = ''; // Clear existing rows
+
+        if (students.length === 0) {
+          tbody.innerHTML = `<tr id="empty-message">
+            <td colspan="7" style="text-align: center; color: gray;">No students added yet.</td>
+          </tr>`;
+          return;
+        }
+
+        let totalAttended = 0;
+
+        students.forEach((student, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${index + 1}</td> <!-- Count starts from 1 -->
+            <td>${student.name}</td>
+            <td>${student.department}</td>
+            <td>${student.indexNumber}</td>
+            <td class="status present" style="color: ${student.isPresent ? 'green' : 'gray'};">${student.isPresent ? '✔' : ''}</td>
+            <td class="status absent" style="color: ${!student.isPresent ? 'red' : 'gray'};">${!student.isPresent ? '✘' : ''}</td>
+            <td><button class="delete-btn" data-index="${index}">Delete</button></td>
+          `;
+          tbody.appendChild(row);
+
+          if (student.isPresent) {
+            totalAttended++;
+          }
+        });
+
+        document.getElementById('total-attended').textContent = totalAttended;
+      };
+
+      // Delete student data
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('delete-btn')) {
+          const index = e.target.getAttribute('data-index');
+          const students = JSON.parse(localStorage.getItem('students')) || [];
+          students.splice(index, 1);
+          localStorage.setItem('students', JSON.stringify(students));
+          loadStudents();
+        }
+      });
+
+      // Load students on page load
+      document.addEventListener('DOMContentLoaded', loadStudents);
+    </script>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>About Us</h3>
+        <p>University of Juba is a leading institution in education and research, fostering innovation and excellence.</p>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#leaderboard" class="footer-link">Leaderboard</a></li>
+          <li><a href="#contest-details" class="footer-link">Contest Details</a></li>
+          <li><a href="#submission" class="footer-link">Submission</a></li>
+          <li><a href="#contact" class="footer-link">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.facebook.com" target="_blank" class="footer-link">Facebook</a></li>
+          <li><a href="https://www.twitter.com" target="_blank" class="footer-link">Twitter</a></li>
+          <li><a href="https://www.instagram.com" target="_blank" class="footer-link">Instagram</a></li>
+          <li><a href="https://www.linkedin.com" target="_blank" class="footer-link">LinkedIn</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <p>Email: info@uofjuba.edu</p>
+        <p>Phone: +211 123 456 789</p>
+        <p>Address: Juba, South Sudan</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 University of Juba. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <style>
+    /* Footer Styles */
+    .footer {
+      background-color: #007bff;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* Four columns */
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .footer-column p,
+    .footer-column ul {
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffcc00; /* Highlight color on hover */
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 10px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for tablets */
+      }
+
+      .footer-column h3 {
+        font-size: 16px;
+      }
+
+      .footer-column p,
+      .footer-column ul {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-container {
+        grid-template-columns: 1fr; /* Single column for phones */
+      }
+
+      .footer-column h3 {
+        font-size: 14px;
+      }
+
+      .footer-column p,
+      .footer-column ul {
+        font-size: 12px;
+      }
+
+      .footer {
+        padding: 20px 10px;
+      }
+    }
+  </style>
+</body>
+</html>
+`
